@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,6 +73,26 @@ body {
 }
 </style>
 </head>
+    
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "PASTE YOUR KEY",
+  authDomain: "PASTE YOUR AUTH DOMAIN",
+  databaseURL: "PASTE YOUR DATABASE URL",
+  projectId: "PASTE YOUR PROJECT ID",
+  storageBucket: "PASTE YOUR STORAGE",
+  messagingSenderId: "PASTE YOUR SENDER ID",
+  appId: "PASTE YOUR APP ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+console.log("Firebase connected!");
+</script>
 
 <body>
 
