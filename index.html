@@ -2,10 +2,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Last Transmission: G12</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Orbitron', sans-serif;
@@ -15,6 +21,7 @@ body {
     height: 100vh;
 }
 
+/* SIDEBAR */
 .sidebar {
     width: 30%;
     background: rgba(255,255,255,0.05);
@@ -22,12 +29,15 @@ body {
     padding: 30px;
     box-shadow: 0 0 20px rgba(138,43,226,0.5);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar h2 {
     margin-bottom: 20px;
 }
 
+/* NAME BUTTONS */
 .name {
     padding: 12px;
     margin-bottom: 10px;
@@ -35,6 +45,7 @@ body {
     cursor: pointer;
     background: rgba(255,255,255,0.1);
     transition: 0.3s;
+    text-align: center;
 }
 
 .name:hover {
@@ -42,25 +53,27 @@ body {
     box-shadow: 0 0 15px white;
 }
 
+/* CONTENT AREA */
 .content {
     width: 70%;
     padding: 40px;
     overflow-y: auto;
 }
 
+/* MESSAGE BOX */
 .message {
     background: rgba(255,255,255,0.07);
     padding: 15px;
     border-radius: 15px;
     margin-bottom: 15px;
     animation: fadeIn 0.3s ease-in-out;
+    word-wrap: break-word;
 }
 
+/* SEND BUTTON */
 .sendBtn {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    padding: 10px 25px;
+    margin-top: auto;
+    padding: 12px;
     border-radius: 30px;
     border: none;
     background: #7b2cff;
@@ -68,15 +81,43 @@ body {
     cursor: pointer;
     box-shadow: 0 0 15px white;
     transition: 0.3s;
+    font-size: 16px;
 }
 
 .sendBtn:hover {
     background: #a259ff;
 }
 
+/* ANIMATION */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+
+    body {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        box-shadow: none;
+        padding: 20px;
+    }
+
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .sendBtn {
+        width: 100%;
+        margin-top: 20px;
+    }
+
 }
 </style>
 </head>
@@ -108,7 +149,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getFirestore, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBVvSUvAmeHpaxMtShW1HFc__czpagrVj4",
+  apiKey: "YOUR_API_KEY",
   authDomain: "g12-anonymous-messages.firebaseapp.com",
   projectId: "g12-anonymous-messages",
   storageBucket: "g12-anonymous-messages.firebasestorage.app",
@@ -158,31 +199,3 @@ window.loadMessages = async function(name) {
 
 </body>
 </html>
-
-@media (max-width: 768px) {
-    body {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .sidebar {
-        width: 100%;
-        box-shadow: none;
-        padding: 20px;
-    }
-
-    .content {
-        width: 100%;
-        padding: 20px;
-    }
-
-    .sendBtn {
-        position: static;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .name {
-        text-align: center;
-    }
-}
