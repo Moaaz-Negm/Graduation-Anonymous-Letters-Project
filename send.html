@@ -2,7 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Send Anonymous Message</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -13,13 +15,14 @@
 }
 
 body {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Orbitron', sans-serif;
     background: linear-gradient(135deg, #1a002b, #2a003f, #0f001a);
     color: white;
+    padding: 20px;
 }
 
 .container {
@@ -28,6 +31,7 @@ body {
     padding: 50px;
     border-radius: 30px;
     width: 420px;
+    max-width: 100%;
     text-align: center;
     box-shadow: 0 0 40px rgba(138,43,226,0.6);
     animation: fadeIn 0.8s ease-in-out;
@@ -83,12 +87,41 @@ button {
 button:hover {
     background: #a259ff;
     box-shadow: 0 0 25px white;
-    transform: scale(1.05);
+    transform: scale(1.03);
+}
+
+.backBtn {
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #a259ff;
+    box-shadow: none;
+}
+
+.backBtn:hover {
+    background: rgba(162,89,255,0.2);
+    transform: none;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✅ RESPONSIVE FIX */
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 30px;
+        border-radius: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    textarea {
+        height: 110px;
+    }
 }
 </style>
 </head>
@@ -111,20 +144,18 @@ button:hover {
 
     <button id="sendBtn">Send</button>
 
-    <!-- NEW BACK BUTTON -->
-    <button id="backBtn" onclick="location.href='index.html'" style="margin-top:15px; background:transparent; border:1px solid #a259ff; box-shadow:none;">
+    <button class="backBtn" onclick="location.href='index.html'">
         ← Back to Main
     </button>
 </div>
 
-
 <!-- Firebase Script -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBVvSUvAmeHpaxMtShW1HFc__czpagrVj4",
+  apiKey: "YOUR_API_KEY",
   authDomain: "g12-anonymous-messages.firebaseapp.com",
   projectId: "g12-anonymous-messages",
   storageBucket: "g12-anonymous-messages.firebasestorage.app",
@@ -134,8 +165,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-console.log("Firebase Connected ✅");
 
 document.getElementById("sendBtn").addEventListener("click", async () => {
     const person = document.getElementById("person").value;
@@ -150,7 +179,7 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
         await addDoc(collection(db, "messages"), {
             person: person,
             message: message,
-            timestamp: new Date()
+            timestamp: serverTimestamp()
         });
 
         alert("Message Sent Successfully!");
@@ -166,19 +195,3 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
 
 </body>
 </html>
-
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-        padding: 30px;
-        border-radius: 20px;
-    }
-
-    h2 {
-        font-size: 18px;
-    }
-
-    textarea {
-        height: 110px;
-    }
-}
