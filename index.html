@@ -73,23 +73,26 @@ body {
 }
 </style>
 </head>
+
+  
     
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "PASTE YOUR KEY",
-  authDomain: "PASTE YOUR AUTH DOMAIN",
-  databaseURL: "PASTE YOUR DATABASE URL",
-  projectId: "PASTE YOUR PROJECT ID",
-  storageBucket: "PASTE YOUR STORAGE",
-  messagingSenderId: "PASTE YOUR SENDER ID",
-  appId: "PASTE YOUR APP ID"
+  apiKey: "AIzaSyBVvSUvAmeHpaxMtShW1HFc__czpagrVj4",
+  authDomain: "g12-anonymous-messages.firebaseapp.com",
+  projectId: "g12-anonymous-messages",
+  storageBucket: "g12-anonymous-messages.firebasestorage.app",
+  messagingSenderId: "165461903209",
+  appId: "1:165461903209:web:56713351246b9281005ff8",
+  measurementId: "G-HSDLC52G4X"
 };
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const analytics = getAnalytics(app);
+    
 
 console.log("Firebase connected!");
 </script>
