@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Send Anonymous Message</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, #140021, #2a003f);
+    color: white;
+}
+
+.container {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 25px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(138,43,226,0.6);
+}
+
+select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+textarea {
+    height: 120px;
+    resize: none;
+}
+
+button {
+    padding: 12px;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    background: #7b2cff;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 15px white;
+}
+
+button:hover {
+    background: #a259ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Send Anonymous Message</h2>
+
+    <select id="person">
+        <option value="">Select a Classmate</option>
+        <option>Moaaz Negm</option>
+        <option>Marawan Shahien</option>
+        <option>Ammar Elamin</option>
+        <option>Noor Bilal</option>
+        <option>Khushnura Khurshedova</option>
+    </select>
+
+    <textarea id="message" placeholder="Write your message..."></textarea>
+
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+function sendMessage() {
+    const person = document.getElementById("person").value;
+    const message = document.getElementById("message").value;
+
+    if (!person || !message) {
+        alert("Please select a name and write a message.");
+        return;
+    }
+
+    const existing = JSON.parse(localStorage.getItem(person)) || [];
+    existing.push(message);
+    localStorage.setItem(person, JSON.stringify(existing));
+
+    alert("Message Sent!");
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
