@@ -52,13 +52,11 @@ select, textarea {
     transition: 0.3s ease;
 }
 
-/* Dropdown arrow color fix */
 select {
     appearance: none;
     cursor: pointer;
 }
 
-/* Focus glow */
 select:focus, textarea:focus {
     box-shadow: 0 0 15px #a259ff;
     border: 1px solid #a259ff;
@@ -95,27 +93,6 @@ button:hover {
 </style>
 </head>
 
-<script type="module">
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBVvSUvAmeHpaxMtShW1HFc__czpagrVj4",
-  authDomain: "g12-anonymous-messages.firebaseapp.com",
-  projectId: "g12-anonymous-messages",
-  storageBucket: "g12-anonymous-messages.firebasestorage.app",
-  messagingSenderId: "165461903209",
-  appId: "1:165461903209:web:56713351246b9281005ff8",
-  measurementId: "G-HSDLC52G4X"
-};
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-    
-
-console.log("Firebase connected!");
-</script>
-
 <body>
 
 <div class="container">
@@ -132,32 +109,54 @@ console.log("Firebase connected!");
 
     <textarea id="message" placeholder="Write your message..."></textarea>
 
-    <button onclick="sendMessage()">Send</button>
+    <button id="sendBtn">Send</button>
 </div>
 
-<script>
-function sendMessage() {
+<!-- Firebase Script -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBVvSUvAmeHpaxMtShW1HFc__czpagrVj4",
+  authDomain: "g12-anonymous-messages.firebaseapp.com",
+  projectId: "g12-anonymous-messages",
+  storageBucket: "g12-anonymous-messages.firebasestorage.app",
+  messagingSenderId: "165461903209",
+  appId: "1:165461903209:web:56713351246b9281005ff8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+console.log("Firebase Connected ✅");
+
+document.getElementById("sendBtn").addEventListener("click", async () => {
     const person = document.getElementById("person").value;
-    const message = document.getElementById("message").value;
+    const message = document.getElementById("message").value.trim();
 
     if (!person || !message) {
         alert("Please select a name and write a message.");
         return;
     }
 
-    const existing = JSON.parse(localStorage.getItem(person)) || [];
-    existing.push(message);
-    localStorage.setItem(person, JSON.stringify(existing));
+    try {
+        await addDoc(collection(db, "messages"), {
+            person: person,
+            message: message,
+            timestamp: new Date()
+        });
 
-    alert("Message Sent!");
-    window.location.href = "index.html";
-}
+        alert("Message Sent Successfully!");
+        document.getElementById("message").value = "";
+        document.getElementById("person").value = "";
+
+    } catch (error) {
+        console.error("Error sending message:", error);
+        alert("Something went wrong.");
+    }
+});
 </script>
-
-</body>
-</html>
-
-
 
 </body>
 </html>
