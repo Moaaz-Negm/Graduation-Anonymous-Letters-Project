@@ -101,24 +101,7 @@ button:hover {
     <button onclick="sendMessage()">Send</button>
 </div>
 
-<script>
-function sendMessage() {
-    const person = document.getElementById("person").value;
-    const message = document.getElementById("message").value;
 
-    if (!person || !message) {
-        alert("Please select a name and write a message.");
-        return;
-    }
-
-    const existing = JSON.parse(localStorage.getItem(person)) || [];
-    existing.push(message);
-    localStorage.setItem(person, JSON.stringify(existing));
-
-    alert("Message Sent!");
-    window.location.href = "index.html";
-}
-</script>
 
 </body>
 </html>
